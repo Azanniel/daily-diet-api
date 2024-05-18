@@ -1,5 +1,6 @@
 {
   "name": "daily-diet",
+  "description": "Um sistema para registrar refeições de um usuário e acompanhar sua jornada de alimentação.",
   "version": "0.0.0",
   "module": "src/index.js",
   "scripts": {
