@@ -11,6 +11,8 @@
     "elysia": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@rocketseat/eslint-config": "^2.2.2",
+    "bun-types": "latest",
+    "eslint-plugin-simple-import-sort": "^12.1.0"
   }
 }
