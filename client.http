@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3333
 
 # @name register_user
-POST {{baseUrl}}/register
+POST {{baseUrl}}/users
 Content-Type: application/json
 
 {

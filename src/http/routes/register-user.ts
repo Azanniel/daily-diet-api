@@ -1,11 +1,28 @@
 import Elysia, { t } from 'elysia'
 
+import { db } from '../../db/connection'
+import { users } from '../../db/schema'
+
 export const registerUser = new Elysia().post(
-  '/register',
+  '/users',
   async ({ body, set }) => {
     const { name, email } = body
 
-    console.log('Registering user => ', name, email)
+    const userWithEmail = await db.query.users.findFirst({
+      where(fields, operators) {
+        return operators.eq(fields.email, email)
+      },
+    })
+
+    if (userWithEmail) {
+      set.status = 409
+      return { message: 'User already exists' }
+    }
+
+    await db.insert(users).values({
+      name,
+      email,
+    })
 
     set.status = 201
   },

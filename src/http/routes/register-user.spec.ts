@@ -9,7 +9,7 @@ describe('Register user', () => {
       email: 'john.doe@mail.com',
     }
 
-    const request = new Request('http://localhost:3333/register', {
+    const request = new Request('http://localhost:3333/users', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
