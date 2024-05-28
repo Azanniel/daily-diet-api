@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "module": "src/index.js",
   "scripts": {
-    "dev": "bun run --watch src/http/server.ts",
-    "test": "bun test",
+    "dev": "bun run --watch src/server.ts",
+    "test": "bun test --env-file=.env.test --preload ./test/setup-e2e.ts",
     "generate": "bunx drizzle-kit generate",
     "migrate": "bun run ./src/db/migrate.ts",
     "studio": "bunx drizzle-kit studio"

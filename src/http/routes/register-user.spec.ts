@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 
-import { app } from '../server'
+import { app } from '../app'
 
 describe('Register user', () => {
   it('should be able to register a new user', async () => {
