@@ -20,5 +20,8 @@ describe('Register user', () => {
     const response = await app.handle(request)
 
     expect(response.status).toBe(201)
+    expect(response.headers.getSetCookie()).toEqual(
+      expect.arrayContaining([expect.stringContaining('sessionId')]),
+    )
   })
 })

@@ -5,8 +5,20 @@ import { users } from '../../db/schema'
 
 export const registerUser = new Elysia().post(
   '/users',
-  async ({ body, set }) => {
+  async ({ body, set, cookie }) => {
     const { name, email } = body
+
+    let sessionId = cookie.sessionId.value
+
+    if (!sessionId) {
+      sessionId = crypto.randomUUID().toString()
+
+      cookie.sessionId.set({
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+        value: sessionId,
+      })
+    }
 
     const userWithEmail = await db.query.users.findFirst({
       where(fields, operators) {
@@ -22,6 +34,7 @@ export const registerUser = new Elysia().post(
     await db.insert(users).values({
       name,
       email,
+      sessionId,
     })
 
     set.status = 201
@@ -30,6 +43,9 @@ export const registerUser = new Elysia().post(
     body: t.Object({
       name: t.String(),
       email: t.String({ format: 'email' }),
+    }),
+    cookie: t.Cookie({
+      sessionId: t.Optional(t.String()),
     }),
   },
 )
