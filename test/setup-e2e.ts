@@ -3,7 +3,7 @@ import { afterAll, beforeAll } from 'bun:test'
 import { drizzle } from 'drizzle-orm/bun-sqlite'
 import { migrate } from 'drizzle-orm/bun-sqlite/migrator'
 
-import { users } from '../src/db/schema'
+import { meals, users } from '../src/db/schema'
 import { env } from '../src/env'
 
 let connection: Database
@@ -18,6 +18,7 @@ beforeAll(async () => {
   })
 
   await db.delete(users)
+  await db.delete(meals)
 })
 
 afterAll(() => {
