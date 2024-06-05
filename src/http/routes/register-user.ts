@@ -8,18 +8,6 @@ export const registerUser = new Elysia().post(
   async ({ body, set, cookie }) => {
     const { name, email } = body
 
-    let sessionId = cookie.sessionId.value
-
-    if (!sessionId) {
-      sessionId = crypto.randomUUID().toString()
-
-      cookie.sessionId.set({
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        value: sessionId,
-      })
-    }
-
     const userWithEmail = await db.query.users.findFirst({
       where(fields, operators) {
         return operators.eq(fields.email, email)
@@ -28,8 +16,23 @@ export const registerUser = new Elysia().post(
 
     if (userWithEmail) {
       set.status = 409
+
+      cookie.sessionId.set({
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+        value: userWithEmail.sessionId,
+      })
+
       return { message: 'User already exists' }
     }
+
+    const sessionId = crypto.randomUUID()
+
+    cookie.sessionId.set({
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+      value: sessionId,
+    })
 
     await db.insert(users).values({
       name,

@@ -10,3 +10,14 @@ Content-Type: application/json
 }
 
 ###
+
+# @name create_meal
+POST {{baseUrl}}/meals
+Content-Type: application/json
+
+{
+  "name": "Breakfast",
+  "description": "Breakfast Description",
+  "isOnDiet": true,
+  "date": "2024-06-05T10:00:00.000Z"
+}
