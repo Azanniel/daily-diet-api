@@ -10,10 +10,10 @@ Para iniciar a aplicação na porta especificar, utilize:
 bun dev
 ```
 
-para executar os testes use:
+para executar os testes use (usamos apenas teste de ponta a ponta nesse projeto):
 
 ```bash
-bun test:e2e
+bun run test
 ```
 
 ## Regras da aplicação

@@ -2,13 +2,14 @@ import Elysia, { t } from 'elysia'
 
 import { db } from '../../db/connection'
 import { meals } from '../../db/schema'
-import { session } from '../middlewares/session'
+import { auth } from '../auth'
 
-export const createMeal = new Elysia().use(session).post(
+export const createMeal = new Elysia().use(auth).post(
   '/meals',
-  async ({ body, set, getCurrentSession }) => {
-    const { user } = await getCurrentSession()
+  async ({ body, set, getCurrentUser }) => {
     const { name, description, isOnDiet, date } = body
+
+    const { user } = await getCurrentUser()
 
     await db.insert(meals).values({
       name,

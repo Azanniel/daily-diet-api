@@ -9,7 +9,7 @@ export const meals = sqliteTable('meals', {
     .$defaultFn(() => createId())
     .primaryKey(),
   userId: text('user_id')
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   name: text('name').notNull(),
   description: text('description').notNull(),

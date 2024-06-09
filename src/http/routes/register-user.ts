@@ -2,10 +2,11 @@ import Elysia, { t } from 'elysia'
 
 import { db } from '../../db/connection'
 import { users } from '../../db/schema'
+import { auth } from '../auth'
 
-export const registerUser = new Elysia().post(
+export const registerUser = new Elysia().use(auth).post(
   '/users',
-  async ({ body, set, cookie }) => {
+  async ({ body, set, signUser }) => {
     const { name, email } = body
 
     const userWithEmail = await db.query.users.findFirst({
@@ -17,22 +18,16 @@ export const registerUser = new Elysia().post(
     if (userWithEmail) {
       set.status = 409
 
-      cookie.sessionId.set({
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        value: userWithEmail.sessionId,
-      })
+      if (userWithEmail.sessionId) {
+        signUser(userWithEmail.sessionId)
+      }
 
       return { message: 'User already exists' }
     }
 
-    const sessionId = crypto.randomUUID()
+    const sessionId = crypto.randomUUID().toString()
 
-    cookie.sessionId.set({
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-      value: sessionId,
-    })
+    signUser(sessionId)
 
     await db.insert(users).values({
       name,

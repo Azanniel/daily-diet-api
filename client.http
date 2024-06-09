@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "name": "Breakfast",
-  "description": "Breakfast Description",
+  "description": "Bread with jam and coffee",
   "isOnDiet": true,
   "date": "2024-06-05T10:00:00.000Z"
 }
