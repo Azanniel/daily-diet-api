@@ -1,19 +1,11 @@
 import { describe, expect, it } from 'bun:test'
+import { makeUser } from 'test/factories/make-user'
 
-import { db } from '../../db/connection'
-import { users } from '../../db/schema'
 import { app } from '../app'
 
 describe('Create a meal', () => {
   it('should be able to create a meal', async () => {
-    const [user] = await db
-      .insert(users)
-      .values({
-        name: 'John Doe',
-        email: 'john.doe@mail.com',
-        sessionId: '123',
-      })
-      .returning({ sessionId: users.sessionId })
+    const user = await makeUser()
 
     const meal = {
       name: 'Bacon',

@@ -1,7 +1,8 @@
 import Elysia, { t } from 'elysia'
 
-import { db } from '../../db/connection'
-import { users } from '../../db/schema'
+import { db } from '@/db/connection'
+import { users } from '@/db/schema'
+
 import { auth } from '../auth'
 
 export const registerUser = new Elysia().use(auth).post(
