@@ -5,7 +5,7 @@ import { users } from '../../src/db/schema'
 
 type User = typeof users.$inferSelect
 
-export async function makeUser(override?: User) {
+export async function makeUser(override?: Partial<User>) {
   const [user] = await db
     .insert(users)
     .values({
