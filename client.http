@@ -1,4 +1,5 @@
 @baseUrl = http://localhost:3333
+@createdMealId = {{fetch_meals.response.body.$.meals.[0].id}}
 
 # @name register_user
 POST {{baseUrl}}/users
@@ -26,4 +27,10 @@ Content-Type: application/json
 
 # @name fetch_meals
 GET {{baseUrl}}/meals
+Content-Type: application/json
+
+###
+
+# @name get_meal_by_id
+GET {{baseUrl}}/meals/{{createdMealId}}
 Content-Type: application/json
