@@ -21,3 +21,9 @@ Content-Type: application/json
   "isOnDiet": true,
   "date": "2024-06-05T10:00:00.000Z"
 }
+
+###
+
+# @name fetch_meals
+GET {{baseUrl}}/meals
+Content-Type: application/json
