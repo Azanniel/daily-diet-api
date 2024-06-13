@@ -2,7 +2,8 @@ import Elysia, { t } from 'elysia'
 
 import { db } from '@/db/connection'
 
-import { auth } from '../auth'
+import { NotFoundError } from '../errors/not-found-error'
+import { auth } from '../middlewares/auth'
 
 export const getMealById = new Elysia().use(auth).get(
   '/meals/:mealId',
@@ -20,10 +21,10 @@ export const getMealById = new Elysia().use(auth).get(
     })
 
     if (!meal) {
-      set.status = 400
-
-      return { message: 'Meal not found.' }
+      throw new NotFoundError('Meal not found.')
     }
+
+    set.status = 200
 
     return meal
   },

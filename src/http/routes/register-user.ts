@@ -3,7 +3,8 @@ import Elysia, { t } from 'elysia'
 import { db } from '@/db/connection'
 import { users } from '@/db/schema'
 
-import { auth } from '../auth'
+import { ConflictError } from '../errors/conflict-error'
+import { auth } from '../middlewares/auth'
 
 export const registerUser = new Elysia().use(auth).post(
   '/users',
@@ -17,13 +18,11 @@ export const registerUser = new Elysia().use(auth).post(
     })
 
     if (userWithEmail) {
-      set.status = 409
-
       if (userWithEmail.sessionId) {
         signUser(userWithEmail.sessionId)
       }
 
-      return { message: 'User already exists' }
+      throw new ConflictError('User already exists.')
     }
 
     const sessionId = crypto.randomUUID().toString()

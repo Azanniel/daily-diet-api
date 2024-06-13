@@ -2,7 +2,7 @@ import Elysia from 'elysia'
 
 import { db } from '@/db/connection'
 
-import { auth } from '../auth'
+import { auth } from '../middlewares/auth'
 
 export const fetchMeals = new Elysia()
   .use(auth)

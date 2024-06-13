@@ -1,24 +1,9 @@
 import Elysia, { t } from 'elysia'
 
-import { db } from '../db/connection'
-import { UnauthorizedError } from './errors/unauthorized-error'
+import { db } from '../../db/connection'
+import { UnauthorizedError } from '../errors/unauthorized-error'
 
 export const auth = new Elysia()
-  .error({
-    UNAUTHORIZED: UnauthorizedError,
-  })
-  .onError(({ code, error, set }) => {
-    switch (code) {
-      case 'UNAUTHORIZED': {
-        set.status = 401
-
-        return {
-          code,
-          message: error.message,
-        }
-      }
-    }
-  })
   .guard({ cookie: t.Cookie({ sessionId: t.String() }) })
   .derive(({ cookie }) => {
     return {

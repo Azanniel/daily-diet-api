@@ -3,7 +3,7 @@ import Elysia, { t } from 'elysia'
 import { db } from '@/db/connection'
 import { meals } from '@/db/schema'
 
-import { auth } from '../auth'
+import { auth } from '../middlewares/auth'
 
 export const createMeal = new Elysia().use(auth).post(
   '/meals',
