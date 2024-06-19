@@ -2,6 +2,7 @@ import { Elysia } from 'elysia'
 
 import { errorHandler } from './error-handler'
 import { createMeal } from './routes/create-meal'
+import { deleteMeal } from './routes/delete-meal'
 import { fetchMeals } from './routes/fetch-meals'
 import { getMealById } from './routes/get-meal-by-id'
 import { registerUser } from './routes/register-user'
@@ -14,5 +15,6 @@ const app = new Elysia()
   .use(fetchMeals)
   .use(getMealById)
   .use(updateMeal)
+  .use(deleteMeal)
 
 export { app }

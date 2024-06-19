@@ -47,3 +47,9 @@ Content-Type: application/json
   "isOnDiet": false,
   "date": "2024-06-05T11:00:00.000Z"
 }
+
+###
+
+# @name delete_meal
+DELETE {{baseUrl}}/meals/a2m4oo12tad06bvzmdo1uyqv
+Content-Type: application/json

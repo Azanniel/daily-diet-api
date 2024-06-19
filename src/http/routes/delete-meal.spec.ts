@@ -4,21 +4,13 @@ import { makeUser } from 'test/factories/make-user'
 
 import { app } from '../app'
 
-describe('Update a meal', () => {
-  it('should be able to update a meal', async () => {
+describe('Delete meal', () => {
+  it('should be able to delete a meal', async () => {
     const user = await makeUser({ id: 'user-01' })
     const meal = await makeMeal({ userId: 'user-01' })
 
-    const updatedMeal = {
-      name: 'Bacon',
-      description: 'Delicious bacon',
-      isOnDiet: false,
-      date: new Date(),
-    }
-
     const request = new Request(`http://localhost:3333/meals/${meal.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(updatedMeal),
+      method: 'DELETE',
       headers: {
         Cookie: `sessionId=${user.sessionId}`,
         'Content-Type': 'application/json',
