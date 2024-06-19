@@ -34,3 +34,16 @@ Content-Type: application/json
 # @name get_meal_by_id
 GET {{baseUrl}}/meals/{{createdMealId}}
 Content-Type: application/json
+
+###
+
+# @name update_meal
+PUT {{baseUrl}}/meals/{{createdMealId}}
+Content-Type: application/json
+
+{
+  "name": "Breakfast updated",
+  "description": "Eggs with sausage and orange juice",
+  "isOnDiet": false,
+  "date": "2024-06-05T11:00:00.000Z"
+}

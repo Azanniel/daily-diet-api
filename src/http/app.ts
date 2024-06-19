@@ -5,6 +5,7 @@ import { createMeal } from './routes/create-meal'
 import { fetchMeals } from './routes/fetch-meals'
 import { getMealById } from './routes/get-meal-by-id'
 import { registerUser } from './routes/register-user'
+import { updateMeal } from './routes/update-meal'
 
 const app = new Elysia()
   .use(errorHandler)
@@ -12,5 +13,6 @@ const app = new Elysia()
   .use(createMeal)
   .use(fetchMeals)
   .use(getMealById)
+  .use(updateMeal)
 
 export { app }
