@@ -53,3 +53,9 @@ Content-Type: application/json
 # @name delete_meal
 DELETE {{baseUrl}}/meals/a2m4oo12tad06bvzmdo1uyqv
 Content-Type: application/json
+
+###
+
+# @name get_metrics_meals
+GET {{baseUrl}}/meals/metrics
+Content-Type: application/json
