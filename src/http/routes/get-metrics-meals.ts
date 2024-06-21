@@ -1,8 +1,6 @@
-import { and, count, eq } from 'drizzle-orm'
 import Elysia from 'elysia'
 
 import { db } from '@/db/connection'
-import { meals } from '@/db/schema'
 
 import { auth } from '../middlewares/auth'
 
@@ -11,21 +9,14 @@ export const getMetricsMeals = new Elysia()
   .get('/meals/metrics', async ({ getCurrentUser }) => {
     const { user } = await getCurrentUser()
 
-    const [totalMealsOnDiet] = await db
-      .select({ count: count() })
-      .from(meals)
-      .where(and(eq(meals.userId, user.id), eq(meals.isOnDiet, true)))
-
-    const [totalMealsOffDiet] = await db
-      .select({ count: count() })
-      .from(meals)
-      .where(and(eq(meals.userId, user.id), eq(meals.isOnDiet, false)))
-
     const totalMeals = await db.query.meals.findMany({
       where(fields, operators) {
         return operators.eq(fields.userId, user.id)
       },
     })
+
+    const totalMealsOnDiet = totalMeals.filter((meal) => meal.isOnDiet).length
+    const totalMealsOffDiet = totalMeals.filter((meal) => !meal.isOnDiet).length
 
     const { bestOnDietSequence } = totalMeals.reduce(
       (acc, meal) => {
@@ -46,8 +37,8 @@ export const getMetricsMeals = new Elysia()
 
     return {
       totalMeals: totalMeals.length,
-      totalMealsOnDiet: totalMealsOnDiet.count,
-      totalMealsOffDiet: totalMealsOffDiet.count,
+      totalMealsOnDiet,
+      totalMealsOffDiet,
       bestOnDietSequence,
     }
   })
